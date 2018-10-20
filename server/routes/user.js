@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
+const { verifyToken, verifyAdmin_Role } = require('../middlewares/authentication');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
@@ -10,7 +11,7 @@ const app = new express();
 // });
 
 
-app.post('/user', (req, res) => {
+app.post('/user', [verifyToken, verifyAdmin_Role], (req, res) => {
     let body = req.body;
 
     let user = new User({
@@ -45,7 +46,12 @@ app.post('/user', (req, res) => {
     // }
 });
 
-app.get('/user', (req, res) => {
+app.get('/user', verifyToken, (req, res) => {
+
+    return res.json({
+        user: req.user
+    })
+
     let since = Number(req.query.since || 0);
     let limit = Number(req.query.limit || 0);
 
@@ -74,7 +80,7 @@ app.get('/user', (req, res) => {
         })
 });
 
-app.put('/user/:id', (req, res) => {
+app.put('/user/:id', [verifyToken, verifyAdmin_Role], (req, res) => {
 
     console.log('here');
 
@@ -95,7 +101,7 @@ app.put('/user/:id', (req, res) => {
     })
 });
 
-app.delete('/user/:id', (req, res) => {
+app.delete('/user/:id', [verifyToken, verifyAdmin_Role], (req, res) => {
     let id = req.params.id;
     let changes = {
         status: false

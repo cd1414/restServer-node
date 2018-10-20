@@ -1,5 +1,4 @@
 require('./config/config');
-
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -14,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //import and use the routes
-app.use(require('./routes/user'))
+app.use(require('./routes/index'))
 
 
 //connect to the mongo dabase
