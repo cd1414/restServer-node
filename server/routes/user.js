@@ -48,10 +48,6 @@ app.post('/user', [verifyToken, verifyAdmin_Role], (req, res) => {
 
 app.get('/user', verifyToken, (req, res) => {
 
-    return res.json({
-        user: req.user
-    })
-
     let since = Number(req.query.since || 0);
     let limit = Number(req.query.limit || 0);
 
