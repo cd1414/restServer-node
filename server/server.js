@@ -1,6 +1,7 @@
 require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = new express();
 
@@ -12,8 +13,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //parse application.json
 app.use(bodyParser.json());
 
+//expose public folder
+app.use(express.static(path.resolve(__dirname, '../public')));
+
 //import and use the routes
-app.use(require('./routes/index'))
+app.use(require('./routes/index'));
+
 
 
 //connect to the mongo dabase

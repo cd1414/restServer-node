@@ -35,3 +35,8 @@ process.env.EXPIRES_TOKEN = 60 * 60 * 24 * 30;
 //=================== 
 
 process.env.SEED = process.env.SEED || 'seed-development-expires';
+
+//===================
+// Google Client ID
+//=================== 
+process.env.CLIENT_ID = process.env.CLIENT_ID || '316704028862-4vfda8remkl0vu26ehj1cucf8ami3hq7.apps.googleusercontent.com';
