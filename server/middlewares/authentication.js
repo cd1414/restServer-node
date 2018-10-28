@@ -6,8 +6,6 @@ const jwt = require('jsonwebtoken');
 // ==================
 let verifyToken = (req, res, next) => {
     let token = req.get('token'); // GET HEADER token
-    console.log(process.env.SEED);
-
     jwt.verify(token, process.env.SEED, (err, decoded) => {
         if (err) {
             return res.status(401).json({
@@ -27,7 +25,6 @@ let verifyToken = (req, res, next) => {
 // ==================
 let verifyAdmin_Role = (req, res, next) => {
     let loggedUser = req.user;
-    console.log(loggedUser);
     if (!loggedUser) {
         return res.status(401).json({
             ok: false,

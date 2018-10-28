@@ -28,7 +28,7 @@ process.env.URLDB = urlDB;
 // 60 min
 // 24 hours
 // 30 days
-process.env.EXPIRES_TOKEN = 60 * 60 * 24 * 30;
+process.env.EXPIRES_TOKEN = '48h';
 
 //===================
 // SEED of authentication

@@ -20,7 +20,6 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 app.use(require('./routes/index'));
 
 
-
 //connect to the mongo dabase
 //run mongod.exe first to get the port dabase name
 mongoose.connect(process.env.URLDB, { useNewUrlParser: true }, (err, resp) => {
