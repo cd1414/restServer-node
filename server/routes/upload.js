@@ -1,5 +1,5 @@
 const express = require('express');
-const fileUpload = require('express-fileUpload');
+const fileUpload = require('express-fileupload');
 const fs = require('fs');
 const path = require('path');
 
