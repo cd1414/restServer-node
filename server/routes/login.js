@@ -46,78 +46,87 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/google', async(req, res) => {
-
     let token = req.body.idtoken;
-
-
-    console.log(token);
-
     let googleUser = await verify(token)
-        .catch(err => {
-            res.status(403).json({
+        .catch(e => {
+            console.log('Token issue')
+            return res.status(403).json({
                 ok: false,
-                err
-            })
+                err: e
+            });
         });
 
-    User.findOne({ email: googleUser.email }, (err, userDB) => {
-        if (err) {
-            return res.status(500).json({
-                ok: false,
-                err
-            });
-        }
-        if (userDB) {
+    console.log(googleUser.email);
 
-            if (userDB.google === false) {
+    // let token = req.body.idtoken;
 
-                console.log(userDB);
-                return res.status(400).json({
-                    ok: false,
-                    err: {
-                        message: 'Use the aplication user and password'
-                    }
-                });
-            } else {
-                let token = jwt.sign({
-                    user: userDB
-                }, process.env.SEED, { expiresIn: process.env.EXPIRES_TOKEN });
+    // let googleUser = await verify(token)
+    //     .catch(e => {
+    //         return res.status(403).json({
+    //             ok: false,
+    //             err: e
+    //         });
+    //     });
 
-                return res.json({
-                    ok: true,
-                    user: userDB,
-                    token
-                })
-            }
-        } else {
-            // user doesnt exist in the database
-            let user = new User();;
-            user.name = googleUser.name;
-            user.email = googleUser.email;
-            user.img = googleUser.img;
-            user.google = true;
-            user.password = ':)';
+    // console.log(googleUser.email);
 
-            user.save((err, user) => {
-                if (err) {
-                    return res.status(500).json({
-                        ok: false,
-                        err
-                    });
-                }
-                let token = jwt.sign({
-                    user: user
-                }, process.env.SEED, { expiresIn: process.env.EXPIRES_TOKEN });
 
-                return res.json({
-                    ok: true,
-                    user: user,
-                    token
-                })
-            });
-        }
+    // User.findOne({ email: googleUser.email }, (err, userDB) => {
+    //     if (err) {
+    //         return res.status(500).json({
+    //             ok: false,
+    //             err
+    //         });
+    //     }
+    //     if (userDB) {
 
-    });
+    //         if (userDB.google === false) {
+    //             return res.status(400).json({
+    //                 ok: false,
+    //                 err: {
+    //                     message: 'Use the aplication user and password'
+    //                 }
+    //             });
+    //         } else {
+    //             let token = jwt.sign({
+    //                 user: userDB
+    //             }, process.env.SEED, { expiresIn: process.env.EXPIRES_TOKEN });
+
+    //             return res.json({
+    //                 ok: true,
+    //                 user: userDB,
+    //                 token
+    //             })
+    //         }
+    //     } else {
+    //         // user doesnt exist in the database
+    //         let user = new User();;
+    //         user.name = googleUser.name;
+    //         user.email = googleUser.email;
+    //         user.img = googleUser.img;
+    //         user.google = true;
+    //         user.password = ':)';
+
+    //         user.save((err, user) => {
+    //             if (err) {
+    //                 return res.status(500).json({
+    //                     ok: false,
+    //                     err
+    //                 });
+    //             }
+    //             let token = jwt.sign({
+    //                 user: user
+    //             }, process.env.SEED, { expiresIn: process.env.EXPIRES_TOKEN });
+
+    //             return res.json({
+    //                 ok: true,
+    //                 user: user,
+    //                 token
+    //             })
+    //         });
+    //     }
+
+    // });
 
     // res.json({
     //     user: googleUser
@@ -139,7 +148,5 @@ let verify = async(token) => {
         img: payload.picture,
         google: true
     }
-
-
 };
 module.exports = app;
